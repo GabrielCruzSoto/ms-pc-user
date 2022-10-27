@@ -14,19 +14,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil {
-    public String getJWTToken(String username) {
+    public String getJWTToken(Integer idUser,String username) {
         String secretKey = "mySecretKey";
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                         .commaSeparatedStringToAuthorityList("ROLE_USER");
 
         String token = Jwts
                 .builder()
-                .setId("__")
-                .setSubject(username)
-                .claim("authorities",
-                        grantedAuthorities.stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .collect(Collectors.toList()))
+                .setId(idUser.toString()).claim("u-name",username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 600000))
                 .signWith(SignatureAlgorithm.HS512,

@@ -36,7 +36,7 @@ public class LoginController {
         String token = null;
         UserDTO userDTO = this.loginService.existsLoginAndUserByUserNameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
         if(userDTO!=null){
-            token = this.jwtTokenUtil.getJWTToken(userDTO.getUsername());
+            token = this.jwtTokenUtil.getJWTToken(userDTO.getId(),userDTO.getUsername());
         }
         return ResponseEntity.ok().body(new JWTTokenDTO(200,token));
     }
